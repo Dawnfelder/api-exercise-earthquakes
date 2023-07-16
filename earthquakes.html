@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthquake locations</title>
+</head>
+
+<body>
+    <h1>Earthquakes</h1>
+    <p>This is a list of the geographical locations of the most recent earthquakes. For more information please visit the website of the <a href="https://earthquake.usgs.gov/earthquakes/feed/">United States Geological Survey</a>.</p>
+    <ul id="eqList"></ul>
+    <script>
+        fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson')
+        .then((res) => res.json())
+        .then((obj) => {
+            console.log(obj.features);
+            //loop through the data and run the output function
+            obj.features.forEach((item, i) => {output(item)});
+        });
+
+        function output(earthquake){
+            // outputs the item on the page
+            console.log(earthquake.properties.place);
+            const li = `<li>${earthquake.properties.place}</li>`
+            document.querySelector('#eqList').insertAdjacentHTML('beforeend', li);
+        }
+    </script>
+</body>
+</html>
